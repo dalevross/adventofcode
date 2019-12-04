@@ -29,19 +29,24 @@ namespace day3
         static int getDistance(int[] startpoint, string[] wire1, string[] wire2)
         {
             int minDistance = Int32.MaxValue;
-
+            Dictionary<Tuple<int,int>,bool> referencePoints = new Dictionary<Tuple<int,int>, bool>();
             List<int[]> intersect = new List<int[]>();
             List<int[]> points1 = getPoints((int[])startpoint.Clone(), wire1);
             List<int[]> points2 = getPoints((int[])startpoint.Clone(), wire2);
             foreach(int[] point1 in points1)
             {
-                foreach(int[] point2 in points2)
+                if(!referencePoints.ContainsKey(new Tuple<int, int>(point1[0],point1[1])))
+                    referencePoints.Add(new Tuple<int, int>(point1[0],point1[1]),true);
+                
+            }
+
+            foreach(int[] point2 in points2)
+            {
+                if(referencePoints.ContainsKey(new Tuple<int, int>(point2[0],point2[1])))
                 {
-                    if(point1.SequenceEqual(point2))
-                    {
-                        intersect.Add(new int[]{point1[0],point1[1]});
-                    }
+                    intersect.Add(new int[]{point2[0],point2[1]});
                 }
+                    
             }
             //int minDistance = Int32.MaxValue;
             foreach(int[] point in intersect)
