@@ -6,4 +6,6 @@
 
 [Day 3](https://adventofcode.com/2019/day/3) &#127775;&#127775; [Solution](day3/Program.cs)
 
-[Day 4](https://adventofcode.com/2019/day/3) &#127775;&#127775; [Solution](day4/Program.cs)
+[Day 4](https://adventofcode.com/2019/day/4) &#127775;&#127775; [Solution](day4/Program.cs)
+
+[Day 5](https://adventofcode.com/2019/day/5) &#127775;&#127775; [Solution](day5/Program.cs)
