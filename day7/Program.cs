@@ -10,11 +10,17 @@ namespace day7
     {
         static int terminatedCount = 0;
         static List<int> indices = Enumerable.Repeat(0,5).ToList();
+        static int loop = 0;
         static void Main(string[] args)
         {
-            var step1 = 0;
-            var step2 = 0;
             int[] ints;
+            int loop = 0;
+
+             foreach(var i in Enumerable.Range(0,5))
+             {
+                 if(File.Exists($"OutpuFile{i}.txt"))
+                    File.Delete($"OutpuFile{i}.txt");
+             }
 
             List<List<int>> perms = GeneratePermutations(Enumerable.Range(5,5).ToList());
             using (StreamReader sr = new StreamReader("sample.txt"))
@@ -31,7 +37,7 @@ namespace day7
                 List<int> correctPerm =  new List<int>();
                 List<int[]> amplifiers = Enumerable.Repeat((int[])ints.Clone(),5).ToList();
 
-
+                StreamWriter sw;
                 
                 foreach(var list in perms)
                 {
@@ -40,10 +46,13 @@ namespace day7
 
                     while(i < 5)
                     {
+                        
+
                         currenthrust = Step1(amplifiers[i], new int[] {list[i],currenthrust},i);
                         if((i+1 == 5) && terminatedCount < 5)
                         {
                             i = 0;
+                            loop++;
 
                         }
                         else{
@@ -74,8 +83,14 @@ namespace day7
         static void PrintInstrunctions(int[] instructions)
         {
             
-            Console.WriteLine(String.Join(",",instructions.Select(i => i.ToString())));
+            Console.WriteLine(String.Join(",",instructions.Select(i => i.ToString())));          
+
+        }
+
+        static void PrintInstrunctions(int[] instructions,StreamWriter sw)
+        {
             
+            sw.WriteLine(String.Join(",",instructions.Select(i => i.ToString())));          
 
         }
 
@@ -87,6 +102,12 @@ namespace day7
             Console.WriteLine($"Processing Ampifier: {currentAmplifier} Index: {indices[currentAmplifier] } Terminated Count: {terminatedCount}");
             for (int i = 0; ints[i] != 99 && i < ints.Length;)
             {
+
+                using(StreamWriter sw = new StreamWriter($"OutpuFile{i}.txt",true))
+                {
+                            sw.Write($"Loop: {loop} |");
+                            PrintInstrunctions(ints,sw);
+                }
                 //Console.Write($"{i}: ");
                 //PrintInstrunctions(ints);
                 
