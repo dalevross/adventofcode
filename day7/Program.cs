@@ -14,12 +14,11 @@ namespace day7
         static void Main(string[] args)
         {
             int[] ints;
-            int loop = 0;
-
+            
              foreach(var i in Enumerable.Range(0,5))
              {
-                 if(File.Exists($"OutpuFile{i}.txt"))
-                    File.Delete($"OutpuFile{i}.txt");
+                 if(File.Exists($"OutpuFile{i}.csv"))
+                    File.Delete($"OutpuFile{i}.csv");
              }
 
             List<List<int>> perms = GeneratePermutations(Enumerable.Range(5,5).ToList());
@@ -35,7 +34,7 @@ namespace day7
 
                 int i = 0;
                 List<int> correctPerm =  new List<int>();
-                List<int[]> amplifiers = Enumerable.Repeat((int[])ints.Clone(),5).ToList();
+                List<int[]> amplifiers = new List<int[]>{(int[])ints.Clone(),(int[])ints.Clone(),(int[])ints.Clone(),(int[])ints.Clone(),(int[])ints.Clone()};
 
                 StreamWriter sw;
                 
@@ -103,11 +102,6 @@ namespace day7
             for (int i = 0; ints[i] != 99 && i < ints.Length;)
             {
 
-                using(StreamWriter sw = new StreamWriter($"OutpuFile{i}.txt",true))
-                {
-                            sw.Write($"Loop: {loop} |");
-                            PrintInstrunctions(ints,sw);
-                }
                 //Console.Write($"{i}: ");
                 //PrintInstrunctions(ints);
                 
@@ -122,10 +116,13 @@ namespace day7
                 int param3mode = int.Parse(opcodeFilled[0].ToString());
                 opcode = int.Parse(opcodeFilled.Substring(3));
 
-                PrintInstrunctions(ints);
-                Console.WriteLine($"Processing Ampifier: {currentAmplifier} Index: {i } Terminated Count: {terminatedCount}");
-            
-
+               
+                
+                using(StreamWriter sw = new StreamWriter($"OutpuFile{currentAmplifier}.csv",true))
+                {
+                            sw.Write($"Loop: {loop}, In Opcode {opcodeFilled}, Index: {i},");
+                            PrintInstrunctions(ints,sw);
+                }
 
                 switch (opcode)
                 {
