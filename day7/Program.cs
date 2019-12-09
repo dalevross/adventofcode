@@ -113,7 +113,7 @@ namespace day7
             //Console.WriteLine("\n\n");
             //PrintInstrunctions(ints);
             //Console.WriteLine($"Processing Ampifier: {currentAmplifier} Index: {indices[currentAmplifier] } Terminated Count: {terminatedCount}");
-            for (int i = 0/*indices[currentAmplifier]*/; i < ints.Length;)
+            for (int i = indices[currentAmplifier]; i < ints.Length;)
             {
 
 
