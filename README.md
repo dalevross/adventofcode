@@ -18,6 +18,6 @@
 
 [Day 9](https://adventofcode.com/2019/day/8) ; [Solution](#)
 
-[Day 10](https://adventofcode.com/2019/day/8) &#127775; [Solution](day10/Program.cs)
+[Day 10](https://adventofcode.com/2019/day/8) &#127775;&#127775;[Solution](day10/Program.cs)
 
 
