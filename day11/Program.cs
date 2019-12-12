@@ -4,10 +4,12 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace day9
+namespace day11
 {
     class Program
     {
+        static int paintedPanels = 0;
+        static char currentDirection = '^';
         static void Main(string[] args)
         {
             long step1 = 0;
@@ -21,7 +23,8 @@ namespace day9
                 //Extra memory
                 list.AddRange(Enumerable.Repeat<long>(0,200000));
                 ints = list.ToArray();
-                step1 = Step1((long[])ints.Clone(), 2);
+                Paint((long[])ints.Clone(), 2);
+                Console.WriteLine(paintedPanels);
                 
 
             }
@@ -29,12 +32,18 @@ namespace day9
 
         }
 
-        static long Step1(long[] ints, int input)
+        static void Paint(long[] ints, int input)
         {
+            Dictionary<Tuple<int,int>,int> painted = new Dictionary<Tuple<int, int>, int>();
             int relativebase = 0;
+            int currentPaint = 0;
+            int currentOutput = 0;
+            
+            Tuple<int,int> currentPoint = new Tuple<int, int>(0,0);
 
             for (int i = 0; ints[i] != 99 && i < ints.Length;)
             {
+                
                 long opcode = ints[i];
                 long param1 = ints[i + 1];
                 long param2 = ints[i + 2];
@@ -77,10 +86,32 @@ namespace day9
                         i += 4;
                         break;
                     case 3:
-                        ints[p1] = input;
+                        if(painted.ContainsKey(currentPoint))
+                            currentPaint = painted[currentPoint];
+                        else
+                            currentPaint = 0;
+                        ints[p1] = currentPaint;
                         i += 2;
                         break;
                     case 4:
+                        /*Process Output*/
+                        if(currentOutput % 2 == 0)
+                        {
+                            if(painted.ContainsKey(currentPoint))
+                                painted[currentPoint] = (int)p1;
+                            else
+                            {
+                                painted.Add(currentPoint,(int)p1);
+                                paintedPanels++;
+
+                            }
+ 
+                        }
+                        else{
+                            currentPoint = GetNextPoint(currentPoint,(int)p1);
+
+                        }
+                        currentOutput++;
                         Console.WriteLine(p1);
                         i += 2;
                         break;
@@ -114,36 +145,41 @@ namespace day9
 
             }
 
-            return ints[0];
+            
         }
 
-        static void SetupInstructions(long[] instructions, long noun, long verb)
+        static Tuple<int,int> GetNextPoint( Tuple<int,int> currentPoint, int leftOrRight)
         {
-            instructions[1] = noun;
-            instructions[2] = verb;
-        }
-
-
-
-        static int Step2(long[] ints, int target)
-        {
-            long[] localints;
-            for (int noun = 0; noun <= 99; noun++)
+            Tuple<int,int> nextPoint = new Tuple<int,int>(0,0);
+            switch (currentDirection)
             {
-                for (int verb = 0; verb <= 99; verb++)
-                {
-                    localints = (long[])ints.Clone();
-                    SetupInstructions(localints, noun, verb);
-                    if (Step1(localints, 1) == target)
-                    {
-                        return 100 * noun + verb;
-                    }
-
-
-                }
-
+                case '^':
+                    nextPoint = (leftOrRight == 0)? new Tuple<int, int>(currentPoint.Item1,currentPoint.Item2 - 1):new Tuple<int, int>(currentPoint.Item1,currentPoint.Item2 + 1);
+                    currentDirection = (leftOrRight == 0)? '<': '>';
+                    break;
+                 case 'V':
+                    nextPoint = (leftOrRight == 0)? new Tuple<int, int>(currentPoint.Item1,currentPoint.Item2 + 1):new Tuple<int, int>(currentPoint.Item1,currentPoint.Item2 -1);
+                    currentDirection = (leftOrRight == 0)? '>': '<';
+                    break;
+                case '>':
+                    nextPoint = (leftOrRight == 0)? new Tuple<int, int>(currentPoint.Item1 + 1,currentPoint.Item2):new Tuple<int, int>(currentPoint.Item1 -1,currentPoint.Item2);
+                    currentDirection = (leftOrRight == 0)? '^': 'V';
+                    break;
+                 case '<':
+                    nextPoint = (leftOrRight == 0)? new Tuple<int, int>(currentPoint.Item1 -1 ,currentPoint.Item2):new Tuple<int, int>(currentPoint.Item1 + 1,currentPoint.Item2);
+                    currentDirection = (leftOrRight == 0)? 'V': '^';
+                    break;
+                
+            
             }
-            return 0;
+
+            return nextPoint;
+
         }
+
+      
+
+
+       
     }
 }
