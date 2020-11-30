@@ -34,6 +34,7 @@ namespace day11
 
         static void Paint(long[] ints, int input)
         {
+            bool started = false;
             Dictionary<Tuple<int,int>,int> painted = new Dictionary<Tuple<int, int>, int>();
             int relativebase = 0;
             int currentPaint = 0;
@@ -89,7 +90,10 @@ namespace day11
                         if(painted.ContainsKey(currentPoint))
                             currentPaint = painted[currentPoint];
                         else
-                            currentPaint = 0;
+                        {
+                            currentPaint = (started)? 0:1;
+                            started = true;
+                        }
                         ints[p1] = currentPaint;
                         i += 2;
                         break;
@@ -97,10 +101,17 @@ namespace day11
                         /*Process Output*/
                         if(currentOutput % 2 == 0)
                         {
+                            var currentColour  = (currentPaint == 0)? "black" :"white"; 
+                            var nextColour  = (p1 == 0)? "black" :"white"; 
                             if(painted.ContainsKey(currentPoint))
+                            {
+                                Console.WriteLine($"Repainting {currentColour} - {currentPoint} - {nextColour} ");
                                 painted[currentPoint] = (int)p1;
+
+                            }                                
                             else
                             {
+                                Console.WriteLine($"Painting {currentColour} - {currentPoint} - {nextColour} ");
                                 painted.Add(currentPoint,(int)p1);
                                 paintedPanels++;
 
@@ -112,7 +123,7 @@ namespace day11
 
                         }
                         currentOutput++;
-                        Console.WriteLine(p1);
+                        //Console.WriteLine(p1);
                         i += 2;
                         break;
                     case 5:
@@ -146,6 +157,41 @@ namespace day11
             }
 
             
+            var minx = painted.Keys.Min(x => x.Item1);
+            var miny = painted.Keys.Min(x => x.Item2);
+            var maxx = painted.Keys.Max(x => x.Item1);
+            var maxy = painted.Keys.Max(x => x.Item2);
+            var xOffset = maxx - minx;
+            var yOffOfset = maxy - miny;
+            char[,] grid = new char[xOffset +  1,yOffOfset + 1];
+            for(int y=0;y<= yOffOfset;y++)
+            {
+                for(int x=0;x <= xOffset;x++)
+                {
+                   grid[x,y] = ' ';
+
+                }
+
+
+            } 
+            foreach(var point in painted.Keys)
+            {
+                grid[point.Item1 - minx,point.Item2 - maxy] = (painted[point]==0)?'*': ' ';
+
+            } 
+
+
+           
+            for(int y=0;y<yOffOfset;y++)
+            {
+                for(int x=0;x<xOffset;x++)
+                {
+                    Console.Write(grid[x,y]);
+
+                }
+                Console.WriteLine();
+            } 
+        
         }
 
         static Tuple<int,int> GetNextPoint( Tuple<int,int> currentPoint, int leftOrRight)

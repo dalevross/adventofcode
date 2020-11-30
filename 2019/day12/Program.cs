@@ -15,28 +15,28 @@ namespace day12
         {
 
 
-            List<Tuple<int, int, int,char>> moons = new List<Tuple<int, int, int>>();
-            /*moons.Add(new Tuple<int, int, int>(-6, 2, -9));
-            moons.Add(new Tuple<int, int, int>(12, -14, -4));
-            moons.Add(new Tuple<int, int, int>(9, 5, -6));
-            moons.Add(new Tuple<int, int, int>(-1, -4, 9));
-            */
-            moons.Add(new Tuple<int, int, int,char>(-1, 0, 2,'I'));
-            moons.Add(new Tuple<int, int, int,char>(2, -10, -7,'E'));
-            moons.Add(new Tuple<int, int, int,char>(4, -8, 8,'G'));
-            moons.Add(new Tuple<int, int, int,char>(3, 5, -1,'C'));
+            List<Tuple<int, int, int, char>> moons = new List<Tuple<int, int, int, char>>();
+            moons.Add(new Tuple<int, int, int,char>(-6, 2, -9,'I'));
+            moons.Add(new Tuple<int, int, int,char>(12, -14, -4,'E'));
+            moons.Add(new Tuple<int, int, int,char>(9, 5, -6,'G'));
+            moons.Add(new Tuple<int, int, int,char>(-1, -4, 9,'C'));
+
+            // moons.Add(new Tuple<int, int, int, char>(-1, 0, 2, 'I'));
+            // moons.Add(new Tuple<int, int, int, char>(2, -10, -7, 'E'));
+            // moons.Add(new Tuple<int, int, int, char>(4, -8, 8, 'G'));
+            // moons.Add(new Tuple<int, int, int, char>(3, 5, -1, 'C'));
 
 
-            Console.WriteLine(CalculateEnergy(moons, 2772));
+            Console.WriteLine(CalculateEnergy(moons,2000));
 
 
 
         }
 
-        static int CalculateEnergy(List<Tuple<int, int, int,char>> moons, int runs)
+        static int CalculateEnergy(List<Tuple<int, int, int, char>> moons, int runs)
         {
             //Dictionary<Tuple<Tuple<int,int,int>,Tuple<int,int,int>>,Tuple<int,int,int>> velocities = new Dictionary<Tuple<Tuple<int, int, int>, Tuple<int, int, int>>, Tuple<int, int, int>>();
-            Dictionary<Tuple<int, int, int>, Tuple<int, int, int>> velocities = new Dictionary<Tuple<int, int, int>, Tuple<int, int, int>>();
+            Dictionary<Tuple<int, int, int, char>, Tuple<int, int, int>> velocities = new Dictionary<Tuple<int, int, int, char>, Tuple<int, int, int>>();
 
             var total = 0;
             var run = 0;
@@ -65,18 +65,15 @@ namespace day12
                     }
 
                 }
-                if (run == runs - 1)
-                {
-                    finalvelocity = new Dictionary<Tuple<int, int, int>, Tuple<int, int, int>>(velocities);
-                    semifinalmoons = new List<Tuple<int, int, int>>(moons);
-                }
+
                 for (int i = 0; i < moons.Count(); i++)
                 {
-                    var tempMoon = new Tuple<int, int, int>(moons[i].Item1, moons[i].Item2, moons[i].Item3);
-                    moons[i] = new Tuple<int, int, int>(
+                    var tempMoon = new Tuple<int, int, int, char>(moons[i].Item1, moons[i].Item2, moons[i].Item3, moons[i].Item4);
+                    moons[i] = new Tuple<int, int, int, char>(
                         moons[i].Item1 + velocities[moons[i]].Item1,
                         moons[i].Item2 + velocities[moons[i]].Item2,
-                        moons[i].Item3 + velocities[moons[i]].Item3
+                        moons[i].Item3 + velocities[moons[i]].Item3,
+                        moons[i].Item4
                     );
                     var tempVelocity = velocities[tempMoon];
                     velocities.Remove(tempMoon);
@@ -86,7 +83,7 @@ namespace day12
                 }
 
                 run++;
-                if (true)//run > 1385 && run <= 1387)
+                if (velocities.All(v => v.Value.Equals(new Tuple<int, int, int>(0, 0, 0))))
                 {
                     Console.WriteLine($"After {run} runs");
                     foreach (var moon in moons)
@@ -94,23 +91,34 @@ namespace day12
                         Console.WriteLine($"pos: {moon} , velocity {velocities[moon]}");
                     }
                     Console.WriteLine();
+                    return run * 2;
                 }
+                total = 0;
+                foreach (var moon in moons)
+                {
+                    var potential = Math.Abs(moon.Item1) + Math.Abs(moon.Item2) + Math.Abs(moon.Item3);
+                    //var oldmoon = semifinalmoons[moons.IndexOf(moon)];
+                    var velocity = velocities[moon];
+                    var kinetic = Math.Abs(velocity.Item1) + Math.Abs(velocity.Item2) + Math.Abs(velocity.Item3);
+                    total += potential * kinetic;
+                    
+                }
+                Console.WriteLine($"Total Energy {total}");
+
 
 
             }
-
-            var kinetic = 0;
-            var potential = 0;
+            total = 0;
             Console.WriteLine($"After {run} runs");
             foreach (var moon in moons)
             {
 
-                potential = Math.Abs(moon.Item1) + Math.Abs(moon.Item2) + Math.Abs(moon.Item3);
+                var potential = Math.Abs(moon.Item1) + Math.Abs(moon.Item2) + Math.Abs(moon.Item3);
                 //var oldmoon = semifinalmoons[moons.IndexOf(moon)];
                 var velocity = velocities[moon];
-                kinetic = Math.Abs(velocity.Item1) + Math.Abs(velocity.Item2) + Math.Abs(velocity.Item3);
+                var kinetic = Math.Abs(velocity.Item1) + Math.Abs(velocity.Item2) + Math.Abs(velocity.Item3);
                 total += potential * kinetic;
-                Console.WriteLine($"moon {moon } potential {potential} velocity {velocity} kinetic {kinetic} ");
+                Console.WriteLine($"moon {moon } potential {potential} velocity {velocity} kinetic {kinetic} >> totat {total}");
             }
             return total;
 
