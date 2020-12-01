@@ -25,3 +25,6 @@
 [Day 10](https://adventofcode.com/2019/day/8) &#127775;&#127775;[Solution](2019/day10/Program.cs)
 
 
+# Advent Of Code 2020
+
+[Day 1](https://adventofcode.com/2020/day/1) &#127775;&#127775; [Solution](2020/day1/Program.cs)
