@@ -22,8 +22,6 @@ namespace day3
                 slopes.Add(new Tuple<int, int>(7,1));
                 slopes.Add(new Tuple<int, int>(1,2));
 
-                List<int> products = new List<int>();
-                
                 String line;
                 while((line = sr.ReadLine())!=null)
                 {
