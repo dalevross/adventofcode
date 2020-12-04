@@ -31,4 +31,6 @@
 
 [Day 2](https://adventofcode.com/2020/day/2) &#127775;&#127775; [Solution](2020/day2/Program.cs)
 
-[Day 3](https://adventofcode.com/2020/day/3) &#127775;&#127775; [Solution](2020/day4/Program.cs)
+[Day 3](https://adventofcode.com/2020/day/3) &#127775;&#127775; [Solution](2020/day3/Program.cs)
+
+[Day 4](https://adventofcode.com/2020/day/4) &#127775;&#127775; [Solution](2020/day4/Program.cs)
