@@ -9,8 +9,7 @@ namespace day4
     {
         static void Main(string[] args)
         {
-            StreamWriter swValid =  new StreamWriter("Valid.txt");
-            StreamWriter swInvalid =  new StreamWriter("InValid.txt");
+            
             int iValidCount = 0;
             using(StreamReader sr = new StreamReader("input.txt"))
             {
