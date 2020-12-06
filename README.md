@@ -14,7 +14,7 @@
 
 [Day 5](https://adventofcode.com/2019/day/5) &#127775;&#127775; [Solution](2019/day5/Program.cs)
 
-[Day 6](https://adventofcode.com/2019/day/5) &#127775;&#127775; [Solution](2019/day6/Program.cs)
+[Day 6](https://adventofcode.com/2019/day/6) &#127775;&#127775; [Solution](2019/day6/Program.cs)
 
 [Day 7](https://adventofcode.com/2019/day/7) &#127775; [Solution](2019/day7/Program.cs)
 
@@ -36,3 +36,5 @@
 [Day 4](https://adventofcode.com/2020/day/4) &#127775;&#127775; [Solution](2020/day4/Program.cs)
 
 [Day 5](https://adventofcode.com/2020/day/5) &#127775;&#127775; [Solution](2020/day5/Program.cs)
+
+[Day 6](https://adventofcode.com/2020/day/6) &#127775;&#127775; [Solution](2020/day6/Program.cs)
