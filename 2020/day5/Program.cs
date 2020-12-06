@@ -37,6 +37,9 @@ namespace day5
                                        
                 }
                 Console.WriteLine("max SeatId {0}",maxSeatId);
+                int mySeatID = seatIds.Where(thisSeatID => !seatIds.Exists(priorSeatID => priorSeatID == thisSeatID-1 )
+                                                        && !seatIds.Exists(nextSeatID => nextSeatID == thisSeatID + 1 )).First();
+                Console.WriteLine("My SeatId {0}",mySeatID);
             }
             
         }
