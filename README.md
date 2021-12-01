@@ -38,3 +38,8 @@
 [Day 5](https://adventofcode.com/2020/day/5) &#127775;&#127775; [Solution](2020/day5/Program.cs)
 
 [Day 6](https://adventofcode.com/2020/day/6) &#127775;&#127775; [Solution](2020/day6/Program.cs)
+
+
+# Advent Of Code 2021
+
+[Day 1](https://adventofcode.com/2021/day/1) &#127775;&#127775; [Solution](2021/day1/Program.cs)
