@@ -43,3 +43,5 @@
 # Advent Of Code 2021
 
 [Day 1](https://adventofcode.com/2021/day/1) &#127775;&#127775; [Solution](2021/day1/Program.cs)
+
+[Day 2](https://adventofcode.com/2021/day/2) &#127775;&#127775; [Solution](2021/day2/Program.cs)
