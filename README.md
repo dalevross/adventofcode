@@ -20,9 +20,9 @@
 
 [Day 8](https://adventofcode.com/2019/day/8) &#127775;&#127775; [Solution](2019/day8/Program.cs)
 
-[Day 9](https://adventofcode.com/2019/day/8) [Solution](#)
+[Day 9](https://adventofcode.com/2019/day/9) [Solution](#)
 
-[Day 10](https://adventofcode.com/2019/day/8) &#127775;&#127775;[Solution](2019/day10/Program.cs)
+[Day 10](https://adventofcode.com/2019/day/10) &#127775;&#127775;[Solution](2019/day10/Program.cs)
 
 
 # Advent Of Code 2020
@@ -49,3 +49,5 @@
 [Day 3](https://adventofcode.com/2021/day/3) &#127775;&#127775; [Solution](2021/day3/Program.cs)
 
 [Day 4](https://adventofcode.com/2021/day/4) &#127775;&#127775; [Solution](2021/day4/Program.cs)
+
+[Day 5](https://adventofcode.com/2021/day/5) &#127775;&#127775; [Solution](2021/day5/Program.cs)

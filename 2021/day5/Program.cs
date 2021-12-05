@@ -47,7 +47,7 @@ namespace day5
                             }
                         }
                     }
-                    if(y == y1)
+                    else if(y == y1)
                     {
                         if(x1 > x)
                         {
@@ -64,6 +64,18 @@ namespace day5
                                 grid[y,i]++;
                             }
                         }
+                    }
+                    else{
+
+                        while((x != x1) && (y!=y1))
+                        {
+                            grid[y,x]++;
+                            int xdif = x < x1 ? 1 : -1;
+                            int ydif = y < y1 ? 1 : -1;
+                            x += xdif;
+                            y += ydif;
+                        }
+                        grid[y1,x1]++;
                     }
                 }
             }
