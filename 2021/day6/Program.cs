@@ -12,16 +12,25 @@ namespace day6
         {
             using(StreamReader sr = new StreamReader("input.txt"))
             {
-                int numberofGenerations = 80;
-                List<int> laternFishes = sr.ReadLine().Split(',').Select(x => Int32.Parse(x)).ToList();
+                int numberofGenerations = 256;
+                List<int> laternFishAges = sr.ReadLine().Split(',').Select(x => Int32.Parse(x)).ToList();
+                long[] state = Enumerable.Repeat(0L,9).ToArray();
+                foreach (var laternFishAge in laternFishAges)
+                {
+                    state[laternFishAge]++;
+                }
                 for(int i = 0;i<numberofGenerations;i++)
                 {
-                    int numberOfZeroes = laternFishes.Count(x=>x==0);
-                    
-                    laternFishes.AddRange(Enumerable.Repeat(9,numberOfZeroes));
-                    laternFishes = laternFishes.Select((x,i) =>  (x == 0)? 6 : x -1).ToList();
+                    long state0 = state[0];
+
+                    for(int j = 0;j< 8;j++)
+                    {
+                        state[j] = state[j+1];
+                    }
+                    state[6] += state0;
+                    state[8] = state0;
                 }
-                Console.WriteLine(laternFishes.Count);
+                Console.WriteLine(state.Sum());
             }
            
         }
