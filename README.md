@@ -51,3 +51,7 @@
 [Day 4](https://adventofcode.com/2021/day/4) &#127775;&#127775; [Solution](2021/day4/Program.cs)
 
 [Day 5](https://adventofcode.com/2021/day/5) &#127775;&#127775; [Solution](2021/day5/Program.cs)
+
+[Day 6](https://adventofcode.com/2021/day/6) &#127775;&#127775; [Solution](2021/day6/Program.cs)
+
+[Day 7](https://adventofcode.com/2021/day/7) &#127775;&#127775; [Solution](2021/day7/Program.cs)
