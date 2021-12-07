@@ -15,14 +15,14 @@ namespace day7
                 horizontalPositions = sr.ReadLine().Split(',').Select(x => Int32.Parse(x)).ToList();
                 
             }
-            int[] fuelCosts = Enumerable.Repeat(0,horizontalPositions.Count).ToArray();
+            int[] fuelCosts = Enumerable.Repeat(0,horizontalPositions.Max()+1).ToArray();
 
             for(int i = 0;i < fuelCosts.Length;i++)
             {
                 int fuelCost = 0;
                 for(int j = 0;j < horizontalPositions.Count;j++)
                 {
-                    int dif = Math.Abs(horizontalPositions[j] - horizontalPositions[i]);
+                    int dif = Math.Abs(horizontalPositions[j] - i);
                     fuelCost += dif * (dif + 1) / 2;
                 }
                 fuelCosts[i] = fuelCost;
