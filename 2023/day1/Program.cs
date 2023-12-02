@@ -2,6 +2,7 @@
 
 using System.Security.Cryptography.X509Certificates;
 using System.Linq;
+using System.ComponentModel.Design;
 
 ///Console.WriteLine(PartOne());
 Console.WriteLine(PartTwo());
@@ -74,32 +75,43 @@ static string ReplaceWords(string line)
         { "nine", 9 }
     };
 
-    Dictionary<int,Tuple<string,int>> occurencies = new Dictionary<int, Tuple<string, int>>();
-    occurencies = numberMap
-    .Select( (number,index) => new KeyValuePair<int,Tuple<string,int>>(index,new Tuple<string, int>(number.Key,line.IndexOf(number.Key))))
-    .Where(number => number.Value.Item2 != -1).OrderBy(x=> x.Value.Item2)
-    .ToDictionary<int,Tuple<string,int>>();
+    List<Tuple<string,int>> occurences = new List<Tuple<string, int>>();
 
-
-    if(occurencies.Count != 0 )
+    for(int i = 0; i < line.Length;i++)
     {
-        int numOccurencies = occurencies.Count;
+        if (numberMap.Where(number => line.Substring(i).StartsWith(number.Key)).Count() > 0)
+        {
+            var numberString = numberMap.Where(number => line.Substring(i).StartsWith(number.Key)).First().Key;
+            occurences.Add(new Tuple<string, int>(numberString,i)); 
+        }      
+    }
+
+
+    if(occurences.Count != 0 )
+    {
+        int numOccurencies = occurences.Count;
 
         for(int i = 0;i<numOccurencies;i++)
         {
 
            if(i>0)
-           {
-                if(occurencies.ElementAt(i).Value.Item2 < occurencies.ElementAt(i -1).Value.Item2 
-                + occurencies.ElementAt(i -1).Value.Item1.Length)
+           {    
+               if(occurences[i].Item2 < occurences[i -1].Item2 
+                + occurences[i-1].Item1.Length)
                 {
-                    line = line.Substring(0,occurencies.ElementAt(i-1).Value.Item2 + occurencies.ElementAt(i -1).Value.Item1.Length)
-                    + line.Substring(occurencies.ElementAt(i).Value.Item2);
+                    line = line.Substring(0,occurences[i-1].Item2 + occurences[i -1].Item1.Length)
+                    + line.Substring(occurences[i].Item2);
 
-                    occurencies = numberMap
-                    .Select( (number,index) => new KeyValuePair<int,Tuple<string,int>>(index,new Tuple<string, int>(number.Key,line.IndexOf(number.Key))))
-                    .Where(number => number.Value.Item2 != -1).OrderBy(x=> x.Value.Item2)
-                    .ToDictionary<int,Tuple<string,int>>();
+                    occurences = new List<Tuple<string, int>>();
+                
+                    for(int j = 0; j < line.Length;j++)
+                    {
+                        if (numberMap.Where(number => line.Substring(j).StartsWith(number.Key)).Count() > 0)
+                        {
+                            var numberString = numberMap.Where(number => line.Substring(j).StartsWith(number.Key)).First().Key;
+                            occurences.Add(new Tuple<string, int>(numberString,j)); 
+                        }      
+                    }
 
                 }
 
@@ -109,8 +121,8 @@ static string ReplaceWords(string line)
 
         //foreach(KeyValuePair<string,int> kvp in occurencies)
         //{
-                line = line.Replace(occurencies.First().Value.Item1, numberMap[occurencies.First().Value.Item1].ToString());
-                line = line.Replace(occurencies.Last().Value.Item1, numberMap[occurencies.Last().Value.Item1].ToString());
+                line = line.Replace(occurences.First().Item1, numberMap[occurences.First().Item1].ToString());
+                line = line.Replace(occurences.Last().Item1, numberMap[occurences.Last().Item1].ToString());
                 
         //}
        
