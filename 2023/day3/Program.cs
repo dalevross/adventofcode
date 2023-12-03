@@ -92,5 +92,99 @@ int PartOne()
 
 int PartTwo()
 {
-    return 0;
+    int sum = 0;
+    string? line;
+    Dictionary<Tuple<int,int>,string> partnums = new Dictionary<Tuple<int, int>, string>();
+    using(StreamReader sr = new StreamReader("input.txt"))
+    {
+        int lineNum = 0;
+        char[,] grid = new char[140,140];
+        while((line = sr.ReadLine()) != null)
+        {  
+             bool numStarted = false;
+             int startIndex = 0;
+             StringBuilder sb = new StringBuilder();
+            for(int i =0;i < line.Length;i++) 
+            {
+                if(char.IsDigit(line[i]))
+                {
+                    if(!numStarted)
+                    {
+                        sb = new StringBuilder();
+                        numStarted = true;
+                        startIndex = i;
+                    }
+                    sb.Append(line[i]);
+                    
+                }
+                else
+                {
+                    if(numStarted)
+                    {
+                        partnums.Add(new Tuple<int, int>(lineNum,startIndex),sb.ToString());
+                        numStarted = false;
+                    }
+
+                }
+               
+                grid[lineNum,i] = line[i];
+            }
+            if(numStarted)
+            {
+                partnums.Add(new Tuple<int, int>(lineNum,startIndex),sb.ToString());
+                numStarted = false;
+
+            }
+            lineNum++;
+        
+        }
+
+        Dictionary<Tuple<int,int>,List<int>> possibleGears = new Dictionary<Tuple<int, int>, List<int>>();
+
+        foreach(KeyValuePair<Tuple<int,int>,string> kvp in partnums)
+        {
+            bool isPartNum = false;
+            int row = kvp.Key.Item1;
+            int column = kvp.Key.Item2;
+            for(int i = row -1;i <= row + 1;i++)
+            {
+                for(int j = column -1; j<= column + kvp.Value.Length;j++)
+                {
+                    if(i >= 0 && i < 140 && j >= 0 && j < 140)
+                    {
+                        if(!Char.IsDigit(grid[i,j]) && !(grid[i,j] == '.'))
+                        {
+                            isPartNum = true;
+                            int partNumber = Int32.Parse(kvp.Value);
+
+                            if(grid[i,j] == '*')
+                            {
+                                if(possibleGears.ContainsKey(new Tuple<int,int>(i,j)))
+                                {
+                                    possibleGears[new Tuple<int,int>(i,j)].Add(partNumber);
+                                }
+                                else{
+                                    possibleGears.Add(new Tuple<int, int>(i,j),new List<int>{partNumber});
+                                }
+                            }
+                            break;
+                        }
+                                               
+                    }
+                   
+                }
+                if(isPartNum)
+                    break;
+            }
+            
+            
+        }
+        var actualGears = possibleGears.Where(gear => gear.Value.Count == 2);
+        foreach(KeyValuePair<Tuple<int,int>,List<int>> kvp in actualGears)
+        {
+            sum += kvp.Value[0] * kvp.Value[1];
+        }
+        
+    }
+    return sum;
 }
