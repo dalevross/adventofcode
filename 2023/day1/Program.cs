@@ -4,7 +4,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Linq;
 using System.ComponentModel.Design;
 
-///Console.WriteLine(PartOne());
+Console.WriteLine(PartOne());
 Console.WriteLine(PartTwo());
 
 static int PartOne()
