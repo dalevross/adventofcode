@@ -71,3 +71,5 @@
 [Day 7](https://adventofcode.com/2023/day/7) &#127775;&#127775; [Solution](2023/day7/Program.cs)
 
 [Day 8](https://adventofcode.com/2023/day/8) &#127775;&#127775; [Solution](2023/day8/Program.cs)
+
+[Day 9](https://adventofcode.com/2023/day/9) &#127775;&#127775; [Solution](2023/day9/Program.cs)
